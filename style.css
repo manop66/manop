@@ -1,0 +1,41 @@
+/* styles.css */
+
+/* Reset some default styles */
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Header navigation */
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+/* Profile section */
+.profile {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    /* Add background color or image if needed */
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007bff; /* Placeholder color */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 20px;
+}
