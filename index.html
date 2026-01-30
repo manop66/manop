@@ -1,271 +1,383 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Manop M, an automobile enthusiast and engineer with interests in FX trading, content creation, and photography.">
-    <meta name="keywords" content="Manop M, portfolio, automobile, engineering, FX trading, content creation, photography, travel, adventure">
-    <meta name="author" content="Manop M">
-    <link rel="icon" href="https://example.com/path/to/your/favicon.ico" type="image/x-icon"> <!-- Replace with the actual HTTPS path to your favicon -->
-    <title>Manop M</title>
+    <meta name="description" content="Portfolio of Manop M, an automobile enthusiast and engineer.">
+    <title>Manop M | Portfolio</title>
+    
+    <!-- Tailwind CSS (No installation needed) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                fontFamily: {
+                    sans: ['Outfit', 'sans-serif'],
+                    serif: ['Playfair Display', 'serif'],
+                },
+                extend: {
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
+        /* Custom Styles that Tailwind doesn't cover easily */
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            background-color: #fafafa;
+            color: #1e293b;
+            overflow-x: hidden;
         }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
+        .dark body {
+            background-color: #0a0a0a;
+            color: #e2e8f0;
         }
 
-        .circle {
-            background-color: orange;
-            border-radius: 50%;
-            width: 30px; /* Circle diameter */
-            height: 30px; /* Circle diameter */
-            margin-right: 10px; /* Space between circle and text */
+        .dark .glass-panel {
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .header-text {
-            font-size: 36px; /* Medium size for name */
-            margin: 0; /* Remove default margin */
+        /* Mouse Follower */
+        #cursor-follower {
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
         }
 
-        .subheader-text {
-            font-size: 16px; /* Small size for subheading */
-            margin: 0; /* Remove default margin */
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.17, 0.55, 0.55, 1);
         }
-
-        .menu {
-            display: flex;
-            gap: 20px; /* Space between menu items */
-            font-size: 18px; /* Medium size for menu items */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-
-        .menu a {
-            text-decoration: none;
-            color: #333; /* Menu link color */
-            transition: color 0.3s; /* Transition for hover effect */
-        }
-
-        .menu a:hover {
-            color: orange; /* Change color on hover */
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            height: calc(100vh - 140px); /* Adjust for header height */
-            flex-wrap: wrap;
-        }
-
-        .profile-pic {
-            background-image: url('https://static.wixstatic.com/media/e9b86f_4f85f1d3c7524c108b8f71acad946d01~mv2.jpg/v1/fill/w_480,h_480,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/WhatsApp%20Image%202024-10-02%20at%2019_33_edited.jpg');
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-            width: 350px;
-            height: 350px;
-            margin-right: 20px;
-        }
-
-        .text-section {
-            flex: 1;
-            text-align: left; /* Align text to the left */
-        }
-
-        .heading {
-            font-size: 150px; /* Adjusted size for medium text */
-            margin-bottom: 10px; /* Close the heading and subheading */
-        }
-
-        .subheading {
-            font-size: 36px; /* Adjusted size for medium text */
-            margin-bottom: 20px; /* Spacing between subheading and paragraph */
-        }
-
-        .paragraph {
-            font-size: 20px; /* Medium size for paragraph text */
-            line-height: 1.6; /* Improved readability */
-        }
-
-        .icons {
-            display: flex;
-            justify-content: flex-start; /* Align icons to the start */
-            margin-top: 30px; /* Increased margin for spacing */
-        }
-
-        .icon {
-            border-radius: 50%;
-            width: 90px;
-            height: 90px;
-            margin: 0 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* Footer styles */
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between; /* Space items evenly */
-            align-items: center; /* Center items vertically */
-            margin-top: 70px; /* Added margin to create space above the footer */
-        }
-
-        footer h3 {
-            margin: 0;
-        }
-
-        footer p {
-            margin: 5px 0;
-            font-size: 18px; /* Medium size for footer text */
-        }
-
-        .footer-left {
-            display: flex;
-            flex-direction: column; /* Stack items vertically */
-        }
-
-        .footer-right {
-            text-align: right; /* Align text to the right */
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .social-link {
-            margin: 0 10px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px; /* Medium size for social link text */
-        }
-
-        /* Media query for smaller screens */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center; /* Center items vertically */
-            }
-
-            .profile-pic {
-                margin-bottom: 20px;
-                width: 150px;
-                height: 150px;
-            }
-
-            .heading {
-                font-size: 28px; /* Smaller heading size for mobile */
-            }
-
-            .subheading {
-                font-size: 20px; /* Smaller subheading size for mobile */
-            }
-
-            .paragraph {
-                font-size: 16px; /* Smaller paragraph text for mobile */
-            }
-
-            .icon {
-                width: 70px;
-                height: 70px;
-            }
-
-            footer p {
-                font-size: 16px; /* Smaller footer text for mobile */
-            }
-
-            .social-link {
-                font-size: 16px; /* Smaller social link text for mobile */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .heading {
-                font-size: 24px; /* Further reduce heading size for small screens */
-            }
-
-            .subheading {
-                font-size: 18px; /* Further reduce subheading size for small screens */
-            }
-
-            .paragraph {
-                font-size: 14px; /* Further reduce paragraph text for small screens */
-            }
-
-            .icon {
-                width: 60px;
-                height: 60px;
-            }
+        
+        .tilt-card {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
         }
     </style>
 </head>
+<body class="selection:bg-indigo-500 selection:text-white">
 
-<body>
-    <header>
-        <div class="header-left">
-            <div class="circle"></div>
-            <div>
-                <h1 class="header-text">Manop M</h1>
-                <p class="subheader-text">Automobile enthusiast and engineer.</p>
-            </div>
-        </div>
-        <nav class="menu">
-            <a href="#">Resume</a>
-            <a href="#">Projects</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
+    <!-- Mouse Follower -->
+    <div id="cursor-follower" class="fixed w-6 h-6 border border-white rounded-full hidden lg:block transform -translate-x-1/2 -translate-y-1/2"></div>
 
-    <div class="container">
-        <div class="profile-pic"></div>
-        <div class="text-section">
-            <h1 class="heading">Hello</h1>
-            <h2 class="subheading">A Bit About Me</h2>
-            <p class="paragraph">As an automobile enthusiast and engineer, I thrive on exploring the intricacies of automotive design and technology. My passion extends to FX trading and investing, where I enjoy analyzing market trends and making informed decisions. In my free time, I embrace my creative side as a content creator, delving into photography and editing to capture the beauty of my travels and adventures. Whether I'm programming or embarking on a new journey, I constantly seek to learn and grow in every aspect of my life.</p>
-            <div class="icons">
-                <div class="icon" style="background-color: red;">Projects</div>
-                <div class="icon" style="background-color: teal;">Resume</div>
-                <div class="icon" style="background-color: orange;">Contact</div>
-            </div>
-        </div>
+    <!-- Animated Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-200/30 dark:bg-indigo-900/20 rounded-full blur-[100px] animate-blob"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-blue-200/30 dark:bg-blue-900/20 rounded-full blur-[100px] animate-blob" style="animation-delay: 2s"></div>
     </div>
 
-    <footer>
-        <div class="footer-left">
-            <p>Phone: +91-8943523502</p>
-            <p>Email: info@manop.in</p>
-            <p>Follow Me</p>
-            <a href="#" class="social-link">Instagram</a>
-            <a href="#" class="social-link">LinkedIn</a>
-            <a href="#" class="social-link">Twitter</a>
-        </div>
-        <div class="footer-right">
-            <p>© 2024 By Manop M.</p>
-        </div>
-    </footer>
-</body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center py-6 px-4">
+        <div class="glass-panel rounded-full px-6 py-3 flex items-center gap-8 transition-transform hover:scale-[1.02]">
+            <a href="#" class="text-xl font-bold font-serif flex items-center gap-2">
+                Manop<span class="text-indigo-500">.in</span>
+            </a>
 
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide uppercase">
+                <a href="#home" class="hover:text-indigo-500 transition-colors">Home</a>
+                <a href="#about" class="hover:text-indigo-500 transition-colors">About</a>
+                <a href="#contact" class="hover:text-indigo-500 transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-20">
+
+        <!-- Hero Section -->
+        <section id="home" class="min-h-[90vh] flex flex-col justify-center items-center text-center">
+            
+            <!-- Profile Image -->
+            <div class="reveal mb-12 relative group">
+                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full p-2 border border-slate-200 dark:border-white/10 glass-panel relative z-10">
+                    <img 
+                        src="https://static.wixstatic.com/media/e9b86f_4f85f1d3c7524c108b8f71acad946d01~mv2.jpg/v1/fill/w_480,h_480,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/WhatsApp%20Image%202024-10-02%20at%2019_33_edited.jpg" 
+                        alt="Manop M" 
+                        class="w-full h-full object-cover rounded-full grayscale group-hover:grayscale-0 transition-all duration-700"
+                    >
+                </div>
+                <!-- Decor Elements -->
+                <div class="absolute -right-4 -bottom-4 bg-white dark:bg-slate-800 p-3 rounded-full shadow-lg animate-bounce">
+                    <i data-lucide="camera" class="w-6 h-6 text-indigo-500"></i>
+                </div>
+            </div>
+
+            <div class="reveal" style="transition-delay: 100ms">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 dark:border-white/10 bg-white/30 dark:bg-white/5 backdrop-blur-md mb-8">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span class="text-xs font-bold tracking-widest uppercase opacity-70">Available for Projects</span>
+                </div>
+            </div>
+
+            <h1 class="reveal text-6xl md:text-8xl font-serif font-bold mb-6 tracking-tight leading-none" style="transition-delay: 200ms">
+                Manop M
+            </h1>
+
+            <p class="reveal text-xl md:text-2xl font-light text-slate-600 dark:text-slate-400 mb-10 max-w-2xl" style="transition-delay: 300ms">
+                Automobile enthusiast & Engineer. <br>
+                <span id="typewriter" class="text-indigo-500 font-medium"></span><span class="animate-pulse">|</span>
+            </p>
+
+            <div class="reveal flex gap-4 justify-center" style="transition-delay: 400ms">
+                <a href="#about" class="px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold hover:scale-105 transition-transform flex items-center gap-2">
+                    Start Exploring <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+        </section>
+
+        <!-- About Section (Bento Grid) -->
+        <section id="about" class="py-20">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                <!-- Main Bio -->
+                <div class="reveal md:col-span-8 glass-panel p-10 rounded-[2rem] tilt-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="user" class="w-6 h-6 text-indigo-500"></i>
+                        <span class="text-xs font-bold uppercase tracking-widest opacity-60">About Me</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-serif mb-6 leading-tight">
+                        "Exploring the intricacies of automotive design and technology."
+                    </h2>
+                    <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                        As an automobile enthusiast and engineer, I thrive on exploring the intricacies of automotive design and technology. My passion extends to FX trading and investing, where I enjoy analyzing market trends and making informed decisions. In my free time, I embrace my creative side as a content creator, delving into photography and editing to capture the beauty of my travels and adventures.
+                    </p>
+                </div>
+
+                <!-- Stats / Quick Info -->
+                <div class="reveal md:col-span-4 glass-panel p-8 rounded-[2rem] flex flex-col justify-between tilt-card" style="transition-delay: 100ms">
+                    <div>
+                        <i data-lucide="map-pin" class="w-8 h-8 text-indigo-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">Based in<br>Bangkok, Thailand</h3>
+                    </div>
+                    <div class="mt-8 pt-8 border-t border-slate-200 dark:border-white/10">
+                        <p class="text-xs font-bold uppercase tracking-widest opacity-60 mb-1">Interests</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 text-xs font-bold">FX Trading</span>
+                            <span class="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300 text-xs font-bold">Photography</span>
+                            <span class="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-300 text-xs font-bold">Travel</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Three Detail Cards -->
+                <div class="reveal md:col-span-4 glass-panel p-6 rounded-[2rem] hover:bg-white/50 dark:hover:bg-white/5 transition-colors group tilt-card" style="transition-delay: 200ms">
+                    <div class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="briefcase" class="w-6 h-6 text-orange-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">Projects</h3>
+                    <p class="text-sm opacity-70">Engineering & Tech</p>
+                </div>
+
+                <div class="reveal md:col-span-4 glass-panel p-6 rounded-[2rem] hover:bg-white/50 dark:hover:bg-white/5 transition-colors group tilt-card" style="transition-delay: 300ms">
+                    <div class="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="file-text" class="w-6 h-6 text-teal-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">Resume</h3>
+                    <p class="text-sm opacity-70">Professional Journey</p>
+                </div>
+
+                <div class="reveal md:col-span-4 glass-panel p-6 rounded-[2rem] hover:bg-white/50 dark:hover:bg-white/5 transition-colors group tilt-card" style="transition-delay: 400ms">
+                    <div class="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="mail" class="w-6 h-6 text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">Contact</h3>
+                    <p class="text-sm opacity-70">Let's Connect</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer / Contact -->
+        <footer id="contact" class="py-20">
+            <div class="reveal glass-panel rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                
+                <h2 class="text-4xl md:text-7xl font-serif font-bold mb-8">Let's Connect</h2>
+                
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-12">
+                    <a href="mailto:info@manop.in" class="flex items-center gap-2 text-lg hover:text-indigo-500 transition-colors">
+                        <i data-lucide="mail" class="w-5 h-5"></i> info@manop.in
+                    </a>
+                    <a href="tel:+918943523502" class="flex items-center gap-2 text-lg hover:text-indigo-500 transition-colors">
+                        <i data-lucide="phone" class="w-5 h-5"></i> +91-8943523502
+                    </a>
+                </div>
+
+                <div class="flex justify-center gap-4">
+                    <a href="#" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-indigo-500 hover:text-white transition-all">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="mt-16 text-sm opacity-60 font-medium tracking-widest uppercase">
+                    © 2024 Manop M. All rights reserved.
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Chat Widget -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+        <!-- Chat Box -->
+        <div id="chat-box" class="hidden w-80 glass-panel rounded-2xl shadow-2xl overflow-hidden animate-blob transition-all duration-300 transform origin-bottom-right">
+            <div class="bg-indigo-600 p-4 text-white flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold">Manop M</p>
+                        <p class="text-[10px] opacity-80">Replies typically in 1h</p>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="hover:bg-white/20 p-1 rounded"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div class="p-4 h-64 overflow-y-auto bg-slate-50 dark:bg-slate-900/50 text-sm space-y-3">
+                <div class="bg-white dark:bg-slate-800 p-3 rounded-lg rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-700">
+                    Hello! 👋 Thanks for visiting. How can I help you?
+                </div>
+            </div>
+            <div class="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+                <input type="text" placeholder="Type a message..." class="w-full bg-transparent text-sm focus:outline-none">
+            </div>
+        </div>
+
+        <!-- Toggle Button -->
+        <button onclick="toggleChat()" class="w-14 h-14 bg-indigo-600 text-white rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center">
+            <i data-lucide="message-circle" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // Chat Toggle
+        function toggleChat() {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.classList.toggle('hidden');
+        }
+
+        // Mouse Follower
+        const follower = document.getElementById('cursor-follower');
+        document.addEventListener('mousemove', (e) => {
+            follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        // Typewriter Effect
+        const text = "Creating content & Trading FX.";
+        const typeWriterElement = document.getElementById('typewriter');
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                typeWriterElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        // Start typewriter when in view
+        setTimeout(typeWriter, 1000);
+
+        // Scroll Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // 3D Tilt Effect
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / 10) * -1;
+                const rotateY = ((x - centerX) / 10);
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
+</body>
 </html>
